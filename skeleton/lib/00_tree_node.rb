@@ -52,9 +52,6 @@ class PolyTreeNode
         until queue.empty?
             node_removed = queue.shift
             return node_removed if node_removed.value == target_value
-            # node_removed.children.each do |child|
-            #     queue << child
-            # end
             kids = node_removed.children
             queue += kids
         end
