@@ -98,7 +98,29 @@ class Node
         @children = children 
     end 
 
+end 
 
+def dfs(node, target)
+    p node.value
+    return if node.value == target
+    return nil if node.children.length == 0
+
+    node.children.each do |child| # each step will take the child and iterate through it like it's  the root node 
+        res = dfs(child, target) # to return the node in itself 
+        return res unless res.nil? 
+    end 
+    nil
+end 
+
+def bfs(node, target) # before looking at children, have to look at siblings 
+    q = Queue.new 
+    q.enqueue(node) #puts it all in a queue 
+    while (q.size > 0)
+        curr_node = q.dequeue
+        return curr_node if curr_node.value == target
+        curr_node.children.each {|ele| q.enqueue(ele)}
+    end 
+    nil
 end 
 
 
@@ -107,8 +129,16 @@ e = Node.new("e")
 f = Node.new("f")
 g = Node.new("g")
 b = Node.new("b", [d,e]) # this is now a parent node with children nodes d,e 
-c = Node.new("c", [f,e])
+c = Node.new("c", [f,g])
 a = Node.new("a", [b,c]) # in order to traverse, only need access to node a   
+
+p dfs(a, "e")
+p bfs (a, "c")
+
+
+# def build_move_tree(pos)
+#     root = Node.new(pos)
+# end 
 
 
 
